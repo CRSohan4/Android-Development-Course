@@ -26,12 +26,21 @@ public class MainActivity extends AppCompatActivity {
         showButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String nameString = name.getText().toString();
-                String template = "Your name is ";
+                if(name.getText().toString().equals("")){
+                    // now the user have not entered any value in the name field
+                    String errorMsg = "Please enter your name!";
+                    showName.setText(errorMsg);
+                    showName.setTextSize(25);
+                    showName.setVisibility(View.VISIBLE);
+                }else {
+                    // user has entered the name, show that name
+                    String nameString = name.getText().toString();
+                    String template = "Your name is ";
 
-                showName.setText(template + nameString);
-                showName.setTextSize(25);
-                showName.setVisibility(View.VISIBLE);
+                    showName.setText(template + nameString);
+                    showName.setTextSize(25);
+                    showName.setVisibility(View.VISIBLE);
+                }
             }
         });
 
