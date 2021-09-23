@@ -5,6 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp">
@@ -31,6 +32,11 @@
                 android:text="Description"
                 android:paddingLeft="20dp"
                 android:paddingTop="10dp"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:padding="25dp"/>
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
