@@ -163,4 +163,26 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         return cursor.getCount();
     }
+
+    // check whether the name exist or not
+    public boolean isContactPresent(String name){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        // select * from contacts where name = 'Shreya'
+        Cursor cursor = db.query(Util.TABLE_NAME
+                , new String[]{Util.KEY_ID, Util.KEY_NAME, Util.PHONE_NUMBER}
+                , Util.KEY_NAME + "=?", new String[]{name}
+                , null, null, null, null
+                );
+
+        if(cursor != null){
+            cursor.moveToFirst();
+        }
+
+        if(cursor.getCount() > 0){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }
