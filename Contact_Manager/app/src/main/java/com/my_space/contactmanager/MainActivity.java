@@ -1,5 +1,6 @@
 package com.my_space.contactmanager;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -7,6 +8,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.my_space.contactmanager.adapter.MyAdapter;
 import com.my_space.contactmanager.data.DatabaseHandler;
@@ -91,4 +94,25 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    // Menu rules
+    // 1) we need to connect/map the menu xml file to the activity
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_activity_menu, menu);
+        return true;
+    }
+
+    // 2) we need to handle the onClick
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        switch (id){
+            case R.id.addBtnMenu:
+                // add button is clicked
+                Intent intent = new Intent(MainActivity.this, AddContactActivity.class);
+                startActivity(intent);
+                return true;
+        }
+        return true;
+    }
 }

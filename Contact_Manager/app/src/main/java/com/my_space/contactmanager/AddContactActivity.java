@@ -2,11 +2,13 @@ package com.my_space.contactmanager;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.my_space.contactmanager.data.DatabaseHandler;
@@ -18,8 +20,9 @@ public class AddContactActivity extends AppCompatActivity {
 
     private EditText nameEt, phoneNumberEt;
     private Button addBtn;
+    private TextView titleTv;
 
-    private String name, phoneNumber;
+    private String name, phoneNumber, status;
 
     private static final String TAG = "AddContactActivity";
 
@@ -33,6 +36,23 @@ public class AddContactActivity extends AppCompatActivity {
         nameEt = findViewById(R.id.nameEt);
         phoneNumberEt = findViewById(R.id.phoneNumberEt);
         addBtn = findViewById(R.id.addBtn);
+        titleTv = findViewById(R.id.titleTv);
+
+
+        if(getIntent().hasExtra("status")) {
+            status = getIntent().getStringExtra("status");
+            name = getIntent().getStringExtra("name");
+            phoneNumber = getIntent().getStringExtra("phoneNumber");
+            if(status.equals("update")){
+                titleTv.setText("Update Contact Details");
+                addBtn.setText("Update");
+                nameEt.setText(name);
+                phoneNumberEt.setText(phoneNumber);
+            }
+        }
+
+
+
 
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,14 +72,23 @@ public class AddContactActivity extends AppCompatActivity {
 //                    db.addContact(new Contact(name, phoneNumber));
 
                     Log.d(TAG, "onClick:  Contact added successfully");
+                    Intent intent = new Intent(AddContactActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
                 }
 
-                Log.d(TAG, "onCreate: Reading all contacts");
-                List<Contact> contacts1 = db.getAllContacts();
-                for (Contact contact : contacts1){
-                    Log.d(TAG, "onCreate: id " + contact.getId() + " name: " + contact.getName() + " phone: "
-                            + contact.getPhoneNumber()) ;
+                if(getIntent().hasExtra("status")) {
+                    Contact contact = new Contact();
+                    contact.setName(name);
+                    contact.setPhoneNumber(phoneNumber);
+                    db.updateContact(contact);
+
+                    Log.d(TAG, "onClick:  Contact updated successfully");
+                    Intent intent = new Intent(AddContactActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
                 }
+
             }
         });
 

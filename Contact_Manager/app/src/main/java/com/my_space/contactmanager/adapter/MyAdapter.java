@@ -1,15 +1,18 @@
 package com.my_space.contactmanager.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.my_space.contactmanager.AddContactActivity;
 import com.my_space.contactmanager.R;
 import com.my_space.contactmanager.model.Contact;
 
@@ -38,6 +41,17 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
         holder.nameTv.setText(contact.getName());
         holder.phoneNumberTv.setText(contact.getPhoneNumber());
+
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, AddContactActivity.class);
+                intent.putExtra("name", contact.getName());
+                intent.putExtra("phoneNumber", contact.getPhoneNumber());
+                intent.putExtra("status", "update");
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
